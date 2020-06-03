@@ -7,7 +7,7 @@
 
 #define DHTPIN 7 //connect our DHT22 to our digital pin 7
 #define DHTTYPE DHT22
-#define LOG_INTERVAL 60000 //delay for 2 minutes
+#define LOG_INTERVAL 60000 //delay for 1 minutes
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -54,26 +54,30 @@ void setup() {
 
 void loop() {
     
+    //first, lets get our readings
     hum = dht.getHumidity();
     temp= dht.getTempCelcius();
     soilMoist = analogRead(soilSen);
     
+    // Map our soil moister value to the Dry Value and the Submerged Value to get a percentage of soil moisture
     soilMoistPer = map(soilMoist, DRY_VALUE, SUB_VALUE, 0, 100);
     
-    delay((LOG_INTERVAL) - (millis() % LOG_INTERVAL));
+    // time since start
     uint32_t m = millis();
     
+    // This part is to monitor your results from a serial monitor
     Serial.print(m);   
     // milliseconds since start
     Serial.print(", ");
     Serial.print(hum);
-  
+    
     Serial.print(", ");
     Serial.print(temp);
     
     Serial.print(", ");
     Serial.println(soilMoistPer);
     
+    // We will check our results, if it's not a valid result, we will publish an Error event
     if(isnan(hum) == 0 && isnan(temp) == 0)
     {
         snprintf(buffer, sizeof(buffer), "%.02f%s%.02f%s%d", hum, FIELD_SEPERATOR, temp, FIELD_SEPERATOR, soilMoistPer);
@@ -83,6 +87,7 @@ void loop() {
         errCount = 0; 
     } else
     {
+        
         Particle.publish("Error", "Sensor(s) not working", PRIVATE);
         errCount ++;
         
@@ -93,6 +98,8 @@ void loop() {
         }
     }
     
+    // We are going to delay our program by the amount defined
+    delay((LOG_INTERVAL) - (millis() % LOG_INTERVAL));
 }
 
 //function to turn on LED
@@ -109,10 +116,10 @@ void turnLED(int state)
 
 //function to handler request
 void eventHandler(int numBytes)
-{
+{   //read the bytes send by the master and respond accordingly
     char c = Wire.read();
     if (c == 1)
-    {
+    {   //we will delegate this task to another function
         turnLED(1);
     }
     else if (c == 0)
