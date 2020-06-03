@@ -1,6 +1,4 @@
 
-// This #include statement was automatically added by the Particle IDE.
-#include <MQTT.h>
 
 // This #include statement was automatically added by the Particle IDE.
 #include <Adafruit_DHT.h>
