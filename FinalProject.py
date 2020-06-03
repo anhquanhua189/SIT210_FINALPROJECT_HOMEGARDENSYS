@@ -8,10 +8,10 @@ import blynklib
 import smbus
 
 ## API KEYS AND ACCESS TOKEN ##
-API_KEY = 'mqMHkesRXyFQ66EKDtLtLwlzb'
-API_SECRET = 'KEsZbL0q2jZnlyAOcKRU6vWUYE9U4mG83OJu1M26eIM1fEQ0rL'
-ACCESS_TOKEN = '1121963734862159872-ZN4H1p659JMkx6jRjvBegk0tVxAH2D'
-ACCESS_SECRET = 'thx9hCMIbqcIpDPmUvDNDQisoUPIghste8Ttjz3tKwWko'
+API_KEY = 'YOUR_GG_API_KEY'
+API_SECRET = 'YOUR_API_SECRET'
+ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'
+ACCESS_SECRET = 'YOUR_ACCESS_SECRET'
 
 ## TwitterAPI ##
 api = Twython(API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
@@ -109,7 +109,7 @@ address = 0x08
 bus = smbus.SMBus(channel)
 
 ## create your blynk auth token ##
-BLYNK_AUTH = '0lUeD4DOcTJn4uPkAfloNXqwnmjI36m3'
+BLYNK_AUTH = 'YOUR_BLYNK_AUTH'
 
 ## start your blink ##
 blynk = blynklib.Blynk(BLYNK_AUTH)
