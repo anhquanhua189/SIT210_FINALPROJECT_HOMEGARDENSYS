@@ -37,7 +37,7 @@ MIN_MOIST = 10
 scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 
 ## Confirm our credentials from the json key file ##
-creds = ServiceAccountCredentials.from_json_keyfile_name("SheetCredentials.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name("YOUR_CRED_FILE.json", scope)
 
 ## create a client and authorize ## 
 client = gspread.authorize(creds)
