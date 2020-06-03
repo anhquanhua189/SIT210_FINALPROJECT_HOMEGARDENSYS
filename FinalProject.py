@@ -67,12 +67,13 @@ def getAttriFromLastRow():
     valuesList = sheet.row_values(lastValidRow)
     return float(valuesList[0]), float(valuesList[1]), float(valuesList[2])
 
+## check the status of our attribute and return a flag if it's not acceptable
 def checkStatus(attri, ATTRI_MAX, ATTRI_MIN):
     if (attri >= ATTRI_MAX or attri <= ATTRI_MIN):
         return (attri, False)
     else:
         return (attri, True)
-    
+ ## try to make a Tweet if the flag is false   
 def tryTweet(attri, ATTRI_MAX, ATTRI_MIN, ATTRI_TEMP):
     # generate a 6-digit number to avoid tweets duplication
     random.seed(time.process_time())
@@ -85,6 +86,7 @@ def tryTweet(attri, ATTRI_MAX, ATTRI_MIN, ATTRI_TEMP):
         api.update_status(status = TWEET)
         print("Tweeted: " + TWEET)
 
+## create a function to check the status of our garden
 def checkGardenStatus():
     while True:
         if(isNewEntry(sheet)):
@@ -97,23 +99,29 @@ def checkGardenStatus():
             print(lastValidRow)
         time.sleep(30)
 
-
+## initialise our bus channel ##
 channel = 1
 
+## Enter our slave address ##
 address = 0x08
 
+## initalise our bus ##
 bus = smbus.SMBus(channel)
 
+## create your blynk auth token ##
 BLYNK_AUTH = '0lUeD4DOcTJn4uPkAfloNXqwnmjI36m3'
 
+## start your blink ##
 blynk = blynklib.Blynk(BLYNK_AUTH)
 
+## a flag to our LED ##
 ledIsOn = False
 
-
+## handler the event from our Blynk App ##
 @blynk.handle_event('write V4')
 def read_virtual_pin_handler(pin, value):
     global ledIsOn
+    ## sending bytes to our slave Argon 
     if value[0] == '0':
         print("OFF")
         bus.write_byte(address, 0)
@@ -123,6 +131,7 @@ def read_virtual_pin_handler(pin, value):
         bus.write_byte(address, 1)
         ledIsOn = True
         
+ ## define a function to run our blynk ##
 def runBlynk():
     while True:
         blynk.run()
