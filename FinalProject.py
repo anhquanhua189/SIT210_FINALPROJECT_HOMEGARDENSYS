@@ -8,7 +8,7 @@ import blynklib
 import smbus
 
 ## API KEYS AND ACCESS TOKEN ##
-API_KEY = 'YOUR_GG_API_KEY'
+API_KEY = 'YOUR_TWITTER_API_KEY'
 API_SECRET = 'YOUR_API_SECRET'
 ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'
 ACCESS_SECRET = 'YOUR_ACCESS_SECRET'
@@ -97,7 +97,7 @@ def checkGardenStatus():
             tryTweet(moist, MAX_MOIST, MIN_MOIST, MOIST_TWEET)
         else:
             print(lastValidRow)
-        time.sleep(30)
+        time.sleep(60)
 
 ## initialise our bus channel ##
 channel = 1
